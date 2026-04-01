@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday, Mom 🌸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --rose: #e8607a;
+      --blush: #f4b8c4;
+      --cream: #fdf6f0;
+      --gold: #c9923c;
+      --deep: #5a1a2e;
+      --petal: #f9dde4;
+      --green: #7a9e7e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ── floating petals ── */
+    .petal-layer {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      top: -60px;
+      font-size: 1.4rem;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity:.8; }
+      50%  { transform: translateY(50vh) rotate(180deg) translateX(30px); opacity:.5; }
+      100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); opacity:0; }
+    }
+
+    /* ── hero ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, #fde8ee 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, #fde0c8 0%, transparent 60%),
+        var(--cream);
+      z-index: 1;
+    }
+
+    .envelope-wrap {
+      position: relative;
+      cursor: pointer;
+      margin-bottom: 2.5rem;
+    }
+    .envelope {
+      width: 180px; height: 130px;
+      background: linear-gradient(135deg, #fff 60%, #fbe8ef 100%);
+      border: 2px solid var(--blush);
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 8px 40px #e8607a33;
+      transition: transform .3s ease, box-shadow .3s ease;
+      overflow: hidden;
+    }
+    .envelope::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 65px;
+      background: linear-gradient(160deg, #f4b8c4 0%, #fde8ef 55%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transition: transform .5s ease;
+      transform-origin: top center;
+    }
+    .envelope-wrap:hover .envelope {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 50px #e8607a44;
+    }
+    .envelope-inner {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+    }
+    .open-hint {
+      margin-top: .6rem;
+      font-size: .85rem;
+      color: var(--rose);
+      letter-spacing: .12em;
+      font-style: italic;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:.6} 50%{opacity:1} }
+
+    /* envelope open state */
+    .envelope-wrap.opened .envelope::before {
+      transform: rotateX(180deg) translateY(-65px);
+    }
+    .letter-card {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      width: 160px;
+      background: white;
+      border: 1px solid var(--blush);
+      border-radius: 4px;
+      padding: .8rem;
+      font-size: .7rem;
+      line-height: 1.5;
+      color: var(--deep);
+      box-shadow: 0 4px 20px #00000011;
+      opacity: 0;
+      transition: transform .6s ease .2s, opacity .5s ease .2s;
+      text-align: left;
+    }
+    .envelope-wrap.opened .letter-card {
+      transform: translateX(-50%) translateY(-10px);
+      opacity: 1;
+    }
+
+    /* main heading */
+    .tag {
+      font-size: .75rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 9vw, 7rem);
+      line-height: 1.05;
+      color: var(--deep);
+      margin-bottom: .5rem;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--rose);
+    }
+    .sub {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      color: #9a5a6a;
+      font-style: italic;
+      margin-bottom: 2.5rem;
+    }
+
+    /* flower divider */
+    .divider {
+      display: flex; align-items: center; gap: 1rem;
+      color: var(--blush);
+      font-size: 1.2rem;
+      margin: 1.5rem 0;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--blush), transparent);
+    }
+
+    /* ── scroll sections ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 2rem;
+    }
+
+    /* wishes section */
+    #wishes {
+      background: linear-gradient(180deg, var(--cream) 0%, #fff5f8 100%);
+      text-align: center;
+    }
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--rose);
+      margin-bottom: 3rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .wish-card {
+      background: white;
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      border: 1px solid #fde0e8;
+      box-shadow: 0 4px 24px #e8607a0f;
+      transition: transform .3s ease, box-shadow .3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .wish-card.visible {
+      animation: cardIn .6s ease forwards;
+    }
+    @keyframes cardIn {
+      to { opacity:1; transform:translateY(0); }
+    }
+    .wish-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 40px #e8607a22;
+    }
+    .wish-icon { font-size: 2.2rem; margin-bottom: .8rem; }
+    .wish-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--deep);
+      margin-bottom: .5rem;
+    }
+    .wish-card p {
+      font-size: .95rem;
+      color: #8a5a6a;
+      line-height: 1.65;
+    }
+
+    /* ── letter section ── */
+    #letter {
+      background: var(--petal);
+      text-align: center;
+    }
+    .letter-paper {
+      max-width: 620px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 4px;
+      padding: 3.5rem 3rem;
+      border: 1px solid #f0c8d4;
+      box-shadow: 0 2px 60px #e8607a14, inset 0 0 0 8px #fff9fb;
+      position: relative;
+    }
+    .letter-paper::before {
+      content: '';
+      position: absolute;
+      top: 1.5rem; bottom: 1.5rem;
+      left: 3.5rem;
+      width: 1px;
+      background: #fde8ef;
+    }
+    .letter-paper p {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      color: var(--deep);
+      text-align: left;
+      margin-bottom: 1.2rem;
+    }
+    .letter-paper .sign {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: var(--rose);
+      text-align: right;
+      margin-top: 2rem;
+    }
+    .red-line {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #f4b8c4, transparent);
+      margin: 1.5rem 0;
+    }
+
+    /* ── balloon counter ── */
+    #celebration {
+      background: linear-gradient(135deg, #fff9fb 0%, var(--cream) 100%);
+      text-align: center;
+    }
+    .balloons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin: 2rem 0;
+    }
+    .balloon {
+      font-size: 2.5rem;
+      cursor: pointer;
+      display: inline-block;
+      transition: transform .2s;
+      animation: bobble 3s ease-in-out infinite;
+    }
+    .balloon:nth-child(2n) { animation-delay: -.8s; }
+    .balloon:nth-child(3n) { animation-delay: -1.6s; }
+    .balloon:hover { transform: scale(1.3) rotate(-10deg); }
+    .balloon.pop { animation: popAnim .4s ease forwards; }
+    @keyframes bobble { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    @keyframes popAnim { 0%{transform:scale(1)} 50%{transform:scale(1.5)} 100%{transform:scale(0);opacity:0} }
+
+    .pop-score {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+    }
+
+    /* ── footer ── */
+    footer {
+      background: var(--deep);
+      color: var(--blush);
+      text-align: center;
+      padding: 2.5rem;
+      font-size: .9rem;
+      letter-spacing: .08em;
+    }
+    footer strong {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.3rem;
+      color: white;
+    }
+
+    /* ── confetti burst ── */
+    #confetti-canvas {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* entrance animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp .9s ease forwards;
+    }
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+    .delay-1 { animation-delay: .2s; }
+    .delay-2 { animation-delay: .5s; }
+    .delay-3 { animation-delay: .8s; }
+    .delay-4 { animation-delay: 1.1s; }
+
+    @media (max-width: 480px) {
+      .letter-paper { padding: 2.5rem 1.5rem; }
+      .letter-paper::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- floating petals -->
+<div class="petal-layer" id="petalLayer"></div>
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+
+  <div class="envelope-wrap" id="envelopeWrap">
+    <div class="letter-card">
+      "Every hug from you is home. 
+      I love you endlessly, Mom. 
+      — Bhavna 💕"
+    </div>
+    <div class="envelope">
+      <div class="envelope-inner">💌</div>
+    </div>
+    <p class="open-hint">tap to open ↑</p>
+  </div>
+
+  <p class="tag fade-up">With all my love · Bhavna</p>
+  <h1 class="fade-up delay-1">Happy<br/><em>Birthday,</em><br/>Mom</h1>
+  <p class="sub fade-up delay-2">You are my sunshine, my strength, my everything 🌸</p>
+
+  <div class="divider fade-up delay-3">🌹</div>
+  <p class="fade-up delay-4" style="color:#9a5a6a; font-size:1rem; font-style:italic; max-width:400px;">
+    Today the whole world celebrates you — because you make it beautiful just by being in it.
+  </p>
+</section>
+
+<!-- ═══ WISHES ═══ -->
+<section id="wishes">
+  <p class="section-title">A thousand wishes for you, Mom</p>
+  <div class="cards-grid" id="cardsGrid">
+    <div class="wish-card">
+      <div class="wish-icon">🌺</div>
+      <h3>Endless Joy</h3>
+      <p>May every single morning bring you a smile as warm and radiant as your own beautiful soul.</p>
+    </div>
+    <div class="wish-card">
+      <div class="wish-icon">💪</div>
+      <h3>Good Health</h3>
+      <p>May you always be healthy, strong, and full of energy to keep inspiring everyone around you.</p>
+    </div>
+    <div class="wish-card">
+      <div class="wish-icon">🌟</div>
+      <h3>Blessings Galore</h3>
+      <p>You've given so much love — may the universe shower you with a hundred times more in return.</p>
+    </div>
+    <div class="wish-card">
+      <div class="wish-icon">🍰</div>
+      <h3>Sweet Moments</h3>
+      <p>May life be as sweet as your favourite mithai, and every moment be filled with laughter.</p>
+    </div>
+    <div class="wish-card">
+      <div class="wish-icon">🤗</div>
+      <h3>Warm Hugs</h3>
+      <p>From your Bhavna: a thousand virtual hugs, kisses, and cuddles wrapped up in this wish.</p>
+    </div>
+    <div class="wish-card">
+      <div class="wish-icon">✨</div>
+      <h3>Your Dreams</h3>
+      <p>Every dream you ever put aside for us — may they all bloom beautifully, just like you have.</p>
+    </div>
+    <div class="wish-card">
+      <div class="wish-icon">✈️</div>
+      <h3>Miles Apart, Hearts Together</h3>
+      <p>You may be away from home right now, but every corner of home still holds your warmth. Come back soon — we miss you! 💛</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DISTANCE BANNER ═══ -->
+<section id="distance" style="
+  background: linear-gradient(135deg, #5a1a2e 0%, #8a3050 60%, #c9923c 100%);
+  text-align: center;
+  padding: 4rem 2rem;
+">
+  <div style="max-width:640px; margin:0 auto;">
+    <div style="font-size:3rem; margin-bottom:1rem;">✈️ 🏠</div>
+    <h2 style="
+      font-family:'Playfair Display',serif;
+      font-size:clamp(1.6rem,5vw,2.6rem);
+      color:white;
+      line-height:1.3;
+      margin-bottom:1.2rem;
+    ">Away from home,<br/><em style="color:#f4b8c4;">never far from heart</em></h2>
+    <p style="
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.15rem;
+      color:#fde8ef;
+      line-height:1.8;
+      font-style:italic;
+    ">
+      I know your birthday looks a little different this year — no table full of faces, no cake at home, no bear hug at midnight. But Mom, you carry home with you wherever you go, because home is just another word for you. Work hard, enjoy your day, and know that Bhavna is sending every bit of love across every mile between us. 🌹
+    </p>
+    <div style="margin-top:2rem; display:flex; justify-content:center; gap:.5rem; font-size:1.8rem;">
+      <span style="animation:bobble2 2s ease-in-out infinite 0s">💌</span>
+      <span style="animation:bobble2 2s ease-in-out infinite .3s">🌸</span>
+      <span style="animation:bobble2 2s ease-in-out infinite .6s">💛</span>
+      <span style="animation:bobble2 2s ease-in-out infinite .9s">🌸</span>
+      <span style="animation:bobble2 2s ease-in-out infinite 1.2s">💌</span>
+    </div>
+  </div>
+</section>
+<style>
+  @keyframes bobble2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+</style>
+
+<!-- ═══ LETTER ═══ -->
+<section id="letter">
+  <p class="section-title">A note from Bhavna</p>
+  <div class="letter-paper">
+    <p>Dear Mom,</p>
+    <div class="red-line"></div>
+    <p>
+      Words feel too small for everything you are. You are the first voice I remember, the warmth I always run back to, and the person who taught me that love is shown in a million quiet ways — in an extra roti, in a goodnight call, in a prayer said without being asked.
+    </p>
+    <p>
+      I know you're away from home right now, working hard like you always do — and even across all that distance, I feel you close. It's a little strange celebrating your birthday without being in the same room, without a proper hug. But Mom, know that no miles in the world can put space between my heart and yours.
+    </p>
+    <p>
+      On your birthday I want you to feel even a fraction of what you make me feel every single day — cherished, safe, and endlessly proud to call you mine.
+    </p>
+    <p>
+      Thank you for being my best friend, my guide, my home. I hope today is everything you deserve: beautiful, peaceful, and full of joy — even far away.
+    </p>
+    <p>
+      I love you more than any message could say. Here's to you, Mom — today and every day. 🌹
+    </p>
+    <p class="sign">— Your Bhavna 💕</p>
+  </div>
+</section>
+
+<!-- ═══ CELEBRATION ═══ -->
+<section id="celebration">
+  <p class="section-title">Pop a balloon for Mom! 🎈</p>
+  <p style="color:#9a5a6a; margin-bottom:1.5rem; font-style:italic;">Every balloon you pop sends a wish to her!</p>
+  <div class="balloons" id="balloonContainer"></div>
+  <p class="pop-score" id="popScore"></p>
+  <button id="celebrateBtn" onclick="launchConfetti()" style="
+    margin-top:2rem;
+    background: linear-gradient(135deg, var(--rose), #c94060);
+    color:white;
+    border:none;
+    padding:.9rem 2.5rem;
+    border-radius:50px;
+    font-family:'Playfair Display',serif;
+    font-size:1.1rem;
+    cursor:pointer;
+    box-shadow: 0 6px 24px #e8607a44;
+    transition: transform .2s, box-shadow .2s;
+  " onmouseenter="this.style.transform='translateY(-3px)'" onmouseleave="this.style.transform=''">
+    🎉 Celebrate Mom!
+  </button>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  Made with 💖 by <strong>Bhavna</strong> &nbsp;·&nbsp; Happy Birthday, Mom 🌸
+</footer>
+
+<script>
+  /* ── petals ── */
+  const emojis = ['🌸','🌺','🌹','🌷','✿','❀'];
+  const layer = document.getElementById('petalLayer');
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('span');
+    p.className = 'petal';
+    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.fontSize = (.8 + Math.random() * 1.2) + 'rem';
+    p.style.animationDuration = (6 + Math.random() * 8) + 's';
+    p.style.animationDelay = (-Math.random() * 10) + 's';
+    layer.appendChild(p);
+  }
+
+  /* ── envelope ── */
+  const env = document.getElementById('envelopeWrap');
+  env.addEventListener('click', () => {
+    env.classList.toggle('opened');
+    if (env.classList.contains('opened')) launchConfetti(40);
+  });
+
+  /* ── scroll card reveal ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 120);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: .15 });
+  document.querySelectorAll('.wish-card').forEach(c => observer.observe(c));
+
+  /* ── balloons ── */
+  const balloonEmojis = ['🎈','🎁','🎀','🎊','🎂','🥳'];
+  const container = document.getElementById('balloonContainer');
+  const scoreEl = document.getElementById('popScore');
+  let popped = 0;
+  const total = 12;
+
+  for (let i = 0; i < total; i++) {
+    const b = document.createElement('span');
+    b.className = 'balloon';
+    b.textContent = balloonEmojis[i % balloonEmojis.length];
+    b.addEventListener('click', () => {
+      if (b.classList.contains('pop')) return;
+      b.classList.add('pop');
+      popped++;
+      scoreEl.textContent = popped === total
+        ? '🌟 All wishes sent to Mom! She is so loved! 🌟'
+        : `${popped} wish${popped > 1 ? 'es' : ''} sent! 💕`;
+      if (popped === total) launchConfetti();
+    });
+    container.appendChild(b);
+  }
+
+  /* ── confetti ── */
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function launchConfetti(count = 120) {
+    const colors = ['#e8607a','#f4b8c4','#c9923c','#7a9e7e','#fde8ef','#fff'];
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height * .5,
+        vx: (Math.random() - .5) * 4,
+        vy: Math.random() * 3 + 1,
+        size: Math.random() * 8 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * 360,
+        rotV: (Math.random() - .5) * 6,
+        life: 1,
+        shape: Math.random() > .5 ? 'rect' : 'circle'
+      });
+    }
+    if (!animating) animate();
+  }
+
+  let animating = false;
+  function animate() {
+    animating = true;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles = particles.filter(p => p.life > 0);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += .05;
+      p.rot += p.rotV; p.life -= .012;
+      ctx.save();
+      ctx.globalAlpha = p.life;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      if (p.shape === 'rect') {
+        ctx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size/2, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+    });
+    if (particles.length) requestAnimationFrame(animate);
+    else { animating = false; ctx.clearRect(0,0,canvas.width,canvas.height); }
+  }
+</script>
+</body>
+</html>
